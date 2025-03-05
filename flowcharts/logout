@@ -1,0 +1,14 @@
+1:00 timestamp
+logout ---> /api/auth/logout
+                  |
+                  |
+                  |
+                  V
+                  delete refreh token from redis
+                  |
+                  |
+                  V
+                  Access Token and referesh token 
+                  ||                |
+                  VV                V
+                  clear  from cookies

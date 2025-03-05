@@ -1,0 +1,14 @@
+    login --> ./api/auth/login 
+                   |
+                   V
+                   compare password
+                   |
+                   V
+                   access Token & Refresh Token 
+                      |              |
+                      V              V
+                expires in 15m      Expires in 7d
+                    |                   | 
+                    |_______cookie<-----|
+                     
+                    

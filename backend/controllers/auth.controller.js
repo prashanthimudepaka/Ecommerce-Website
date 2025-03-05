@@ -111,9 +111,51 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    res.send("login route called");
+   try{
+    console.log("here runs the login")
+       const {email,password} = req.body;
+       const user = await User.findOne({email});
+       console.log("here runs the login")
+       if(user && (await user.comparePassword(password))){
+
+           const {accessToken,refreshToken} = generateTokens(user._id);
+           await storeRefreshToken(user._id, refreshToken);
+        setCookies(res, accessToken, refreshToken);
+           res.json({
+                
+                   _id: user._id,
+                   username: user.username,
+                   email: user.email,
+                   role: user.role,
+              
+               });  
+       }
+       else
+       {
+           res.status(401).json({message:"Invalid credentials"});
+       }
+       
+    } catch (error) {                      
+        console.error("error in login controller");
+        res.status(500).json({message: error.message});
+   }
 };
 
 export const logout = async (req, res) => {
-    res.send("logout route called");
+    try{
+        const  refreshToken = req.cookies.refreshToken; //user will send automatically to refresh token
+        if(refreshToken)
+        {
+            const decoded=jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET);
+            await redis.del(`refreshToken:${decoded.userId}`);
+
+        }
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        res.status(200).json({message:"Logout successful"});
+    }
+    catch(error)
+    {
+        res.status(500).json({message:"sever error",error:error.message});
+    }
 };
