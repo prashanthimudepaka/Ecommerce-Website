@@ -159,3 +159,40 @@ export const logout = async (req, res) => {
         res.status(500).json({message:"sever error",error:error.message});
     }
 };
+export const refreshToken=async(req,res)=>{
+    try{
+        const refreshToken=req.cookies.refreshToken;
+        if(!refreshToken)
+        {
+            return res.status(401).json({message:"Unauthorized"});
+        }
+        const decoded=jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET);
+        const storedToken = await redis.get(`refreshToken:${decoded.userId}`);    
+        if(!storedToken)
+        {
+            return res.status(401).json({message:"Unauthorized"});
+        }
+        const user=await User.findById(decoded.userId);
+        
+        if(!user)
+        {
+            return res.status(401).json({message:"Unauthorized"});
+        }
+        const accessToken=jwt.sign({userId:user._id},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"});
+        res.cookie("accessToken",accessToken,
+            {
+                httpOnly:true,
+                secure:process.env.NODE_ENV==="production",
+                sameSite:"strict",
+                maxAge:15*60*1000
+            });
+        res.json({message:"Token refreshed successfully"});
+    }       
+    catch(error) {
+        console.log("error in refresh token controller");
+        res.status(500).json({message:"server error",error:error.message});
+    }
+    
+//accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4NDg3NjgwYTlkMjNlZDdlNTJhYWIiLCJpYXQiOjE3NDExNzk4MzksImV4cCI6MTc0MTE4MDczOX0.SPNnlLGu9S9yyNxLmhMvN1RBbDLFNn0WyrmAzoQvwdY; Path=/; HttpOnly; Expires=Wed, 05 Mar 2025 13:18:59 GMT;
+//accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4NDg3NjgwYTlkMjNlZDdlNTJhYWIiLCJpYXQiOjE3NDExNzk5NjEsImV4cCI6MTc0MTE4MDg2MX0.0f_9iVvUMtZW5R07Ue9xKJsBUNktf6kVMjg27oIyVN4; Path=/; HttpOnly; Expires=Wed, 05 Mar 2025 13:21:01 GMT;
+}
