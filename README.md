@@ -85,3 +85,20 @@ run: npm run dev
 - CLOUDINARY_NAME - Cloudinary cloud name
 - CLOUDINARY_API_KEY - Cloudinary API key
 - CLOUDINARY_API_SECRET - Cloudinary API secret
+
+//why folders?
+Models = Store's inventory forms (what info we need for each product)
+Routes = Store directory ("Electronics in Aisle 5")
+Controllers = Store clerks (doing the actual work)
+Middlewares = Security guards & helpers (checking IDs, helping with bags)
+
+FLOW OF REQUESTS:
+Client Request → server.js → Routes → Middleware → Controller → Response
+
+
+external urls used:
+https://account.mongodb.com/account/login?signedOut=true
+
+https://console.upstash.com/redis/b0cbf443-f5f0-4547-992e-fb7b105fb5c4?tab=data-browser&teamid=0
+
+https://console.cloudinary.com/settings/c-f2f7efd524dfdae09749e5cf2e6089/api-keys

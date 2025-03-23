@@ -1,0 +1,72 @@
+Let me explain the purpose of each component in your Node.js/Express application:
+
+1. **server.js** (Entry Point):
+- Main application file that starts your server
+- Sets up Express app and middleware
+- Connects routes
+- Establishes database connection
+```javascript
+// Example from your code
+app.use(express.json())  // Middleware for parsing JSON
+app.use("/api/auth", authRoutes)  // Route mounting
+connectDB();  // Database connection
+```
+
+2. **Routes** (`/routes` folder):
+- Define API endpoints
+- Map URLs to controller functions
+- Handle HTTP methods (GET, POST, etc.)
+```javascript
+// Example from your product.route.js
+router.get("/", protectRoute, admin, getAllProducts);  // GET /api/products
+router.post("/", protectRoute, adminRoute, createProduct);  // POST /api/products
+```
+
+3. **Middleware** (`/middleware` folder):
+- Functions that run between request and response
+- Handle authentication, validation, etc.
+```javascript
+// Example from your auth.middleware.js
+export const protectRoute = async (req, res, next) => {
+    // Checks if user is authenticated
+    const accessToken = req.cookies.accessToken;
+    // ... validation logic
+    next();  // Proceeds to next middleware/controller
+};
+```
+
+4. **Controllers** (`/controllers` folder):
+- Contains business logic
+- Handles requests and sends responses
+- Interacts with models/database
+```javascript
+// Example from product.controller.js
+export const getAllProducts = async (req, res) => {
+    const products = await Product.find({});
+    res.json(products);
+};
+```
+
+5. **Lib** (`/lib` folder):
+- Utility functions and configurations
+- Database connection setup
+- Third-party service configurations
+```javascript
+// Example from your db.js
+export const connectDB = async () => {
+    await mongoose.connect(process.env.MONGODB_URI);
+};
+```
+
+Flow of a Request:
+```
+Client Request → server.js → Routes → Middleware → Controller → Response
+```
+
+Example for GET /api/products:
+1. Request hits server.js
+2. Routed to product.route.js
+3. Goes through protectRoute middleware (auth check)
+4. Goes through admin middleware (role check)
+5. Finally reaches getAllProducts controller
+6. Response sent back to client

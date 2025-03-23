@@ -1,0 +1,123 @@
+### **7. Models (Database Schema & Interaction)**
+- Models define the **structure of data** stored in the database.
+- Typically used with **MongoDB (Mongoose)** or **SQL (Sequelize, Knex.js)**.
+
+---
+
+### **MongoDB Model (Mongoose)**
+- Uses **Mongoose** to define a schema and interact with MongoDB.
+
+📌 **Installation** (if not installed):  
+```sh
+npm install mongoose
+```
+
+**models/User.js Example:**
+```js
+const mongoose = require('mongoose');
+
+// Define the user schema
+const UserSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+}, { timestamps: true });  // Adds createdAt and updatedAt fields
+
+// Create and export the model
+module.exports = mongoose.model('User', UserSchema);
+```
+
+---
+
+### **SQL Model (Sequelize)**
+- Uses **Sequelize ORM** for relational databases (**MySQL, PostgreSQL**).
+
+📌 **Installation** (if not installed):  
+```sh
+npm install sequelize mysql2
+```
+
+**models/User.js Example (Sequelize with MySQL):**
+```js
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database'); // Sequelize connection
+
+const User = sequelize.define('User', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false }
+}, { timestamps: true });
+
+module.exports = User;
+```
+
+---
+
+### **Connecting the Database in `server.js`**
+#### **MongoDB Connection**
+Add this to `server.js`:
+```js
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/mydatabase', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('MongoDB Connected'))
+  .catch(err => console.error(err));
+```
+
+#### **Sequelize (MySQL) Connection**
+Create a `config/database.js` file:
+```js
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize('database_name', 'username', 'password', {
+    host: 'localhost',
+    dialect: 'mysql'
+});
+
+sequelize.authenticate()
+    .then(() => console.log('MySQL Connected'))
+    .catch(err => console.error('Error:', err));
+
+module.exports = sequelize;
+```
+
+Add this to `server.js`:
+```js
+const sequelize = require('./config/database');
+
+sequelize.sync()  // Sync models to DB
+    .then(() => console.log('Database synced'))
+    .catch(err => console.error(err));
+```
+
+---
+
+### **Project Structure After Adding Models**
+```
+/my-node-app
+│-- server.js
+│-- routes/
+│   ├── userRoutes.js
+│-- controllers/
+│   ├── userController.js
+│-- middleware/
+│   ├── authMiddleware.js
+│-- models/
+│   ├── User.js
+│-- config/
+│   ├── database.js   (for Sequelize SQL connection)
+```
+
+---
+
+### **Flow Recap**
+✅ **Client Request** → Hits **Routes**  
+✅ **Routes** → Calls **Controller**  
+✅ **Controller** → Interacts with **Model (Database)**  
+✅ **Model** → Fetches Data & Returns to Controller  
+✅ **Controller** → Sends **Response to Client**  
+
+Would you like a **full working example** with API testing? 🚀

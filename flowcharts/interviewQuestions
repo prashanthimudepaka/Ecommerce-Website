@@ -1,0 +1,76 @@
+  
+
+---
+
+### **1. General Project Questions**
+- **Can you explain your eCommerce project?**  
+- **What technologies did you use, and why?**  
+- **How does your backend handle user authentication and authorization?**  
+- **How did you structure your API endpoints?**  
+
+---
+
+### **2. Node.js & Express**
+- **What is Express.js, and why did you use it?**  
+- **How do you handle middleware in Express?**  
+- **How do you manage routes in your application?**  
+- **What are the differences between `req.params`, `req.query`, and `req.body`?**  
+
+---
+
+### **3. Authentication & Security**
+- **How does JWT authentication work in your project?**  
+- **How do you store and verify user passwords securely?**  
+- **How do you prevent security vulnerabilities like SQL injection, CSRF, and XSS?**  
+- **How do you manage user sessions and token expiration?**  
+
+---
+
+### **4. Database & Mongoose**
+- **How do you design your database schema in MongoDB?**  
+- **What are the advantages of using Mongoose over the native MongoDB driver?**  
+- **How do you implement pagination in MongoDB?**  
+- **How do you optimize database queries in MongoDB?**  
+
+---
+
+### **5. Payment Integration (Stripe)**
+- **How does the Stripe payment flow work?**  
+- **What are the different payment methods Stripe supports?**  
+- **How do you handle payment failures or refunds?**  
+- **How do you ensure secure transactions in your app?**  
+
+---
+
+### **6. File Upload & Cloudinary**
+- **Why did you use Cloudinary instead of storing images locally?**  
+- **How do you optimize image loading for better performance?**  
+- **How does Cloudinary handle transformations and resizing?**  
+
+---
+
+### **7. Caching & Performance (Redis)**
+- **What is Redis, and how does it improve performance?**  
+- **How do you cache database queries using Redis?**  
+- **What are some common cache invalidation strategies?**  
+
+---
+
+### **8. Deployment & Scaling**
+- **Where did you deploy your eCommerce website?**  
+- **How do you handle environment variables in production?**  
+- **What are the challenges of scaling an eCommerce website?**  
+
+---
+
+### **9. Error Handling & Logging**
+- **How do you handle errors in Express?**  
+- **What is the difference between synchronous and asynchronous error handling?**  
+- **How do you log errors and monitor your application?**  
+
+---
+
+### **10. REST API Design**
+- **What HTTP methods did you use for different API endpoints?**  
+- **How do you handle status codes in your API responses?**  
+- **How do you secure your API endpoints?**  

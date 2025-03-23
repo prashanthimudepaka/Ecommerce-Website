@@ -1,0 +1,24 @@
+express – A web framework for Node.js that simplifies building APIs and handling HTTP requests and responses.
+
+dotenv – Loads environment variables from a .env file into process.env. This is useful for storing sensitive data like API keys and database credentials securely.
+
+mongoose – An ODM (Object Data Modeling) library for MongoDB, making it easier to interact with MongoDB databases by defining schemas and models.
+
+jsonwebtoken (JWT) – Used for authentication and authorization. It helps generate and verify tokens for user authentication.
+
+stripe – A payment gateway library that allows you to handle online transactions securely.
+
+cloudinary – A cloud-based image and video management service. It’s used for storing, processing, and delivering optimized images in your eCommerce website.
+
+cookie-parser – A middleware that parses cookies attached to client requests, allowing you to handle authentication and user sessions more effectively.
+
+bcrypt.js – A library for hashing passwords securely, commonly used in user authentication to store encrypted passwords.
+
+ioredis – A Redis client for Node.js that helps with caching, session management, and improving performance by reducing database queries.
+
+Why are these useful for an eCommerce site?
+User authentication: jsonwebtoken, bcrypt.js, and cookie-parser help in managing user login and security.
+Database management: mongoose simplifies database interactions.
+Payment processing: stripe helps handle transactions securely.
+Media storage: cloudinary optimizes and stores images for product listings.
+Performance optimization: ioredis helps with caching and reducing server load.
