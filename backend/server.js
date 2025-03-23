@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.route.js"
 import { connectDB } from './lib/db.js';
 import cookieParser from "cookie-parser"
 import productRoutes from "./routes/product.route.js"
+import cartRoutes from "./routes/cart.route.js"
 
 dotenv.config() //it allows you to retrieve the .env files content
 const app = express();
@@ -15,6 +16,7 @@ app.use(cookieParser()) //this will allow to referesh cokie in login
 
 app.use("/api/auth",authRoutes)
 app.use("/api/products",productRoutes)
+app.use("/api/carts",cartRoutes)
 
 
 // Add this after your middleware and before routes
