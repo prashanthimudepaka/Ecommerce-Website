@@ -7,6 +7,8 @@ import productRoutes from "./routes/product.route.js"
 import cartRoutes from "./routes/cart.route.js"
 import couponRoutes from "./routes/coupon.route.js"
 import paymentRoutes from "./routes/payement.route.js"
+import analyticsRoutes from "./routes/analytics.route.js"
+
 dotenv.config() //it allows you to retrieve the .env files content
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +22,7 @@ app.use("/api/products",productRoutes)
 app.use("/api/carts",cartRoutes)
 app.use("/api/coupons",couponRoutes)
 app.use("/api/payments",paymentRoutes)
+app.use("/api/analytics",analyticsRoutes)
 
 
 
