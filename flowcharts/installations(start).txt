@@ -1,0 +1,20 @@
+FRONTEND:
+cd .\frontend
+npm create vite@latest .
+select react (use down arrow)
+select javascript 
+npm install tailwindcss @tailwindcss/vite
+//follow below steps for tailwind css (process is different)
+https://tailwindcss.com/docs/installation/using-vite
+https://www.youtube.com/watch?v=227LunUUt-E
+in index.html add (link )
+    <link href="/dist/styles.css" rel="stylesheet" /> 
+
+npm run dev
+
+BACKEND:
+cd .\backend
+npm install
+npm install express dotenv mongoose jsonwebtoken stripe cloudinary cookie.parser bcrypt.js ioredis
+npm run dev
+
