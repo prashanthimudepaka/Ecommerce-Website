@@ -196,5 +196,14 @@ export const refreshToken=async(req,res)=>{
 //accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4NDg3NjgwYTlkMjNlZDdlNTJhYWIiLCJpYXQiOjE3NDExNzk4MzksImV4cCI6MTc0MTE4MDczOX0.SPNnlLGu9S9yyNxLmhMvN1RBbDLFNn0WyrmAzoQvwdY; Path=/; HttpOnly; Expires=Wed, 05 Mar 2025 13:18:59 GMT;
 //accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4NDg3NjgwYTlkMjNlZDdlNTJhYWIiLCJpYXQiOjE3NDExNzk5NjEsImV4cCI6MTc0MTE4MDg2MX0.0f_9iVvUMtZW5R07Ue9xKJsBUNktf6kVMjg27oIyVN4; Path=/; HttpOnly; Expires=Wed, 05 Mar 2025 13:21:01 GMT;
 }
+export const getProfile=async(req,res)=>{
+    try{
+        const user=req.user;
+        res.json(user);
+    }
+    catch(error){
+        res.status(500).json({message:"server error",error:error.message});
+    }
+}
 
 //todo implement profile

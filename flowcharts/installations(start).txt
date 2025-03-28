@@ -17,4 +17,7 @@ cd .\backend
 npm install
 npm install express dotenv mongoose jsonwebtoken stripe cloudinary cookie.parser bcrypt.js ioredis
 npm run dev
+in (root folder not in frontend) npm install axios @stripe/stripe-js framer-motion lucide-react react-confetti react-hot-toast react-router-dom recharts  zustand
+//extension es7+ react/redux/react-Native snippets
+ES7+ React/Redux/React-Native snippets
 
