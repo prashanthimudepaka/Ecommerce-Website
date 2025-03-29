@@ -1,5 +1,5 @@
-import { h1 } from "framer-motion/client";
-import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
+
+import { ShoppingCart, UserPlus, LogIn, LogOut, Lock,Home } from "lucide-react";
 import { Link } from "react-router-dom";
 const NavBar = () => {
     const user =false;
@@ -8,14 +8,14 @@ const NavBar = () => {
 
     return (
         <header
-            className="fixed top-0 left-0 w-full bg-gray-500 bg-opacity-90 backdrop-blur-md shadow-lg z-40
-         transition-all duration-300 border-b border-emerald-800"
+            className="fixed top-0 left-0 w-full  bg-opacity-90 backdrop-blur-md shadow-lg z-40
+         transition-all duration-300 border-b border-green- 600 bg-gradient-to-r from-blue-500 to-emerald-500"
         >
             <div className="container mx-auto px-4 py-3">
                 <div className="flex justify-between items-center">
 
             <div className='flex flex-wrap justify-between items-center'>
-					<Link to='/' className='text-2xl font-bold text-emerald-400 items-center space-x-2 flex'>
+					<Link to='/' className='text-2xl font-bold text-green-800 items-center space-x-2 flex'>
 						E-Commerce
 					</Link>
                 </div>
@@ -23,10 +23,17 @@ const NavBar = () => {
                 <nav className='flex flex-wrap items-center gap-4'>
 						<Link
 							to={"/"}
-							className='text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out'
+							className='text-black text-3xl  transition duration-300 ease-in-out'
 						>
-							Home
-						</Link>
+							<Home  
+  className='mr-1 text-indigo-600 border-emerald-200 border-1 shadow-[0_10px_30px_rgba(128,0,128,0.3)] 
+  p-2 bg-gradient-to-r from-green-200 to-blue-300 rounded-full transition-all duration-300 
+  hover:text-green-700 hover:bg-gradient-to-r hover:from-blue-400 hover:to-green-400 
+  hover:shadow-[0_15px_40px_rgba(75,0,130,0.5)]' 
+  size={50} 
+/>
+
+                            </Link>
                     
                      {user && (
 							<Link
