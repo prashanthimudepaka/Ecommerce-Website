@@ -1,0 +1,28 @@
+'await' expressions are only allowed within async functions and at the top levels of modules
+
+tailwind version issue
+
+1. 'await' expressions are only allowed within async functions and at the top levels of modules
+   - This error occurs when trying to use await without marking the function as async
+   - Solution: Add async keyword before the function where await is being used
+   
+2. Tailwind version issue
+   - Incompatibility between Tailwind CSS versions and other dependencies
+   - Solution: Ensure Tailwind CSS version matches the project requirements and other dependencies
+
+3. React Router DOM v6 syntax differences
+   - Switch component replaced with Routes in v6
+   - Component prop replaced with element prop
+   - Solution: Updated to use Routes and element syntax as shown in App.jsx
+
+4. State management synchronization
+   - State updates not reflecting immediately due to React's asynchronous nature
+   - Solution: Use useEffect or proper state management patterns
+
+5. CSS z-index stacking context
+   - Elements with z-index not stacking as expected
+   - Solution: Ensure proper nesting and relative/absolute positioning of elements
+
+6. Responsive design breakpoints
+   - Layout issues at different screen sizes
+   - Solution: Utilize Tailwind's responsive classes and test across various devices

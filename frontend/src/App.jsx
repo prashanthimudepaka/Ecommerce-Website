@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import NavBar from "./components/NavBar";
+import ErrorBoundary from './components/ErrorBoundary';
+import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
@@ -25,6 +27,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
+      <Toaster />
     </div>
   );
 };

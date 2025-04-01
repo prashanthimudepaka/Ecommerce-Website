@@ -69,7 +69,7 @@ const setCookies=(res,accessToken,refreshToken)=>{
     });
 }
 export const signup = async (req, res) => {
-    const { email, password, username } = req.body;
+    const { email, password, name } = req.body;
     try {
         const userExists = await User.findOne({email});
         if(userExists){
@@ -77,7 +77,7 @@ export const signup = async (req, res) => {
         }
 
         const user = await User.create({
-            username,
+            name,
             email,
             password,
             role: "customer"
