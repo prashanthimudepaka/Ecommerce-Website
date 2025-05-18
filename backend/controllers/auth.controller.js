@@ -76,6 +76,11 @@ export const signup = async (req, res) => {
             return res.status(400).json({message: "User already exists"});
         }
 
+        // Validate password
+        if (!password || password.length < 6) {
+            return res.status(400).json({message: "Password must be at least 6 characters long"});
+        }
+
         const user = await User.create({
             name,
             email,
@@ -207,3 +212,121 @@ export const getProfile=async(req,res)=>{
 }
 
 //todo implement profile
+
+/*I'll explain the auth.route.js file line by line, including the technical stack and concepts used:
+
+```javascript:backend/routes/auth.route.js
+// Line 1: Importing Express framework
+import express from "express"
+```
+- Using ES6 module syntax (import/export)
+- Express.js is a Node.js web application framework
+- Provides routing, middleware support, and HTTP utility methods
+
+```javascript:backend/routes/auth.route.js
+// Line 2: Importing middleware
+import { protectRoute } from "../middleware/auth.middleware.js"
+```
+- Custom middleware for authentication
+- Likely uses JWT (JSON Web Tokens) or sessions for auth
+- Relative path import using ES6 module syntax
+- `.js` extension is required in ES modules
+
+```javascript:backend/routes/auth.route.js
+// Line 3: Importing controller functions
+import { signup, login, logout, refreshToken, getProfile } from "../controllers/auth.controller.js"
+```
+- Using MVC (Model-View-Controller) pattern
+- Controller functions handle business logic
+- Destructuring import for multiple functions
+- Separation of concerns: routes delegate to controllers
+
+```javascript:backend/routes/auth.route.js
+// Line 4: Creating router instance
+const router = express.Router();
+```
+- Express.Router() creates modular, mountable route handlers
+- Allows grouping related routes
+- Can be mounted to different URL paths in main app
+
+```javascript:backend/routes/auth.route.js
+// Authentication routes
+router.post("/signup", signup);
+router.post("/login", login);
+router.post("/logout", logout);
+router.post("/refresh-token", refreshToken);
+```
+- RESTful API design pattern
+- POST method used for creating/modifying resources
+- Each route maps to a controller function
+- Routes follow standard authentication flow:
+  - Signup: User registration
+  - Login: Authentication
+  - Logout: Session termination
+  - Refresh-token: JWT refresh mechanism
+
+```javascript:backend/routes/auth.route.js
+// Protected route with middleware
+router.get("/profile", protectRoute, getProfile);
+```
+- GET method for retrieving data
+- Middleware pattern: `protectRoute` runs before `getProfile`
+- Route protection using authentication check
+- Demonstrates Express middleware chaining
+
+```javascript:backend/routes/auth.route.js
+// Exporting router
+export default router;
+```
+- ES6 default export
+- Makes router available for mounting in main app
+
+**Technical Stack Overview**:
+1. **Node.js**
+   - JavaScript runtime
+   - Server-side platform
+
+2. **Express.js**
+   - Web framework for Node.js
+   - Handles routing and middleware
+   - RESTful API support
+
+3. **Authentication**
+   - Likely uses JWT or sessions
+   - Implements refresh token mechanism
+   - Protected routes
+
+4. **Architecture Patterns**
+   - MVC (Model-View-Controller)
+   - Middleware pattern
+   - Router-level middleware
+   - RESTful API design
+
+5. **Modern JavaScript**
+   - ES6+ features
+   - Module system
+   - Async/await (likely in controllers)
+
+6. **Security Considerations**
+   - Protected routes
+   - Authentication middleware
+   - POST for sensitive data
+   - Token refresh mechanism
+
+This file would typically be used in a full-stack application, mounted in the main Express app like:
+```javascript
+// In app.js or server.js
+import authRouter from './routes/auth.route.js';
+app.use('/api/auth', authRouter);
+```
+
+The complete authentication flow would involve:
+- Frontend (React/Vue/Angular)
+- API Routes (This file)
+- Controllers (auth.controller.js)
+- Database (MongoDB/PostgreSQL)
+- Authentication Middleware
+- Token Management
+
+This setup follows modern best practices for building secure, scalable authentication systems in Node.js applications.
+ */

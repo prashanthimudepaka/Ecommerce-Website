@@ -3,14 +3,17 @@ import { useState } from 'react'
 import { ShoppingCart, UserPlus, User, LogIn, LogOut, Lock, Mail, ArrowRight, Loader } from "lucide-react";
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useUserStore } from '../stores/useUserStore'
 const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loading = false;
-  const handleSubmit = (e) => {
+  const {login,loading}=useUserStore();
+  // const loading = false;
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(email, password);
+    login({ email, password }); // Call the login function with the provided email, password );
   }
 
   return (
@@ -90,10 +93,8 @@ const LoginPage = () => {
                               Loading...
                             </>
                           ) : (
-                            <>
-                              <Loader className='mr-2 h-5 w-5 animate-spin ' aria-hidden='true' />
-                              Loading
-                            </>
+                           <>
+                            <LogIn className='mr-2 h-5 w-5' aria-hidden='true' /> Log In</>
                           )}
                         </button>
           </form>

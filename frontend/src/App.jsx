@@ -6,9 +6,18 @@ import LoginPage from "./pages/LoginPage.jsx";
 import NavBar from "./components/NavBar";
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from "react-hot-toast";
+import { Navigate } from "react-router-dom";
+import { Home } from "lucide-react";
+import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
 
 
 const App = () => {
+  const { user, checkAuth} = useUserStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+  // console.log(user);
   return (
     <div className='min-h-screen bg-gray-900 text-black relative overflow-hidden '>
       {/* Background gradient */}
@@ -23,8 +32,9 @@ const App = () => {
       
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          {/* <Route path="/signup" element={<SignupPage />} /> */}
+          <Route path="/signup" element={!user ? <SignupPage /> : <Navigate to='/' />} />
+          <Route path="/login" element={!user ? <LoginPage /> : <Navigate to='/' />} />
         </Routes>
       </div>
       <Toaster />
