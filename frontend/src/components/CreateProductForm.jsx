@@ -2,9 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
-import { toast } from "react-hot-toast";
 
-const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags"];
+const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags","jwellery"];
 
 const CreateProductForm = () => {
 	const [newProduct, setNewProduct] = useState({
@@ -20,77 +19,23 @@ const CreateProductForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// Validate required fields
-			if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.category) {
-				toast.error("Please fill in all required fields");
-				return;
-			}
-
-			// Validate price is a positive number
-			if (isNaN(newProduct.price) || parseFloat(newProduct.price) <= 0) {
-				toast.error("Please enter a valid price");
-				return;
-			}
-
-			// Prepare the data
-			const productData = {
-				...newProduct,
-				price: parseFloat(newProduct.price)
-			};
-
-			// Log the data being sent (excluding the image data for brevity)
-			console.log("Submitting product data:", {
-				...productData,
-				image: productData.image ? "Image data present" : "No image"
-			});
-
-			await createProduct(productData);
+			await createProduct(newProduct);
 			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
-		} catch (error) {
-			console.error("Error in form submission:", error);
-			toast.error(error.response?.data?.message || "Failed to create product");
+		} catch {
+			console.log("error creating a product");
 		}
 	};
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
-			// Validate file size (max 5MB)
-			if (file.size > 5 * 1024 * 1024) {
-				toast.error("Image size should be less than 5MB");
-				return;
-			}
-
-			// Validate file type
-			if (!file.type.startsWith('image/')) {
-				toast.error("Please upload an image file");
-				return;
-			}
-
-			// Create a new FileReader
 			const reader = new FileReader();
 
 			reader.onloadend = () => {
-				// Get the base64 string
-				const base64String = reader.result;
-				
-				// Validate the base64 string
-				if (!base64String.startsWith('data:image/')) {
-					toast.error("Invalid image format");
-					return;
-				}
-
-				console.log("Image loaded successfully, size:", base64String.length);
-				setNewProduct({ ...newProduct, image: base64String });
+				setNewProduct({ ...newProduct, image: reader.result });
 			};
 
-			reader.onerror = (error) => {
-				console.error("Error reading file:", error);
-				toast.error("Error reading image file");
-			};
-
-			// Read the file as base64
-			reader.readAsDataURL(file);
+			reader.readAsDataURL(file); // base64
 		}
 	};
 

@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
+import CategoryPage from "./pages/CategoryPage.jsx";
+
 import NavBar from "./components/NavBar";
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from "react-hot-toast";
@@ -41,6 +43,8 @@ const App = () => {
           <Route path="/login" element={!user ? <LoginPage /> : <Navigate to='/' />} />
           <Route path="/secret-dashboard"  
           element={user?.role==="admin"? <AdminPage />:<Navigate to='/login' />} />
+          <Route path="/category/:category"  
+          element={<CategoryPage/>} />
         </Routes>
       </div>
       <Toaster />
