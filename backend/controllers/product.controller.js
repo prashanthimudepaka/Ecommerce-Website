@@ -34,22 +34,42 @@ export const getRecommendedProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        const {name,description, price, image, category}=req.body;
-        let cloudinaryResponse=null;
-        if(image) {
-            cloudinaryResponse=await cloudinary.uploader.upload(image, {folder:"products"})
-        const product = await Product.create({
+        const { name, description, price, image, category } = req.body;
+        let cloudinaryResponse = null;
+        
+        if (image) {
+            try {
+                cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
+                console.log("Cloudinary upload successful:", cloudinaryResponse);
+            } catch (cloudinaryError) {
+                console.error("Cloudinary upload error:", cloudinaryError);
+                return res.status(500).json({ 
+                    message: "Failed to upload image", 
+                    error: cloudinaryError.message 
+                });
+            }
+        }
+
+        const productData = {
             name,
             description,
-            price,
-            image:cloudinaryResponse?.secure_url?cloudinaryResponse.secure_url:"",
-            category,    
-        });
+            price: parseFloat(price),
+            image: cloudinaryResponse?.secure_url || "",
+            category
+        };
+
+        console.log("Creating product with data:", productData);
+
+        const product = await Product.create(productData);
+        console.log("Product created successfully:", product);
+
         res.status(201).json(product);
-    }
     } catch (error) {
-        console.log("error in create product controller", error.message);
-        res.status(500).json({ message: error.message });
+        console.error("Error in create product controller:", error);
+        res.status(500).json({ 
+            message: "Failed to create product", 
+            error: error.message 
+        });
     }
 }
 

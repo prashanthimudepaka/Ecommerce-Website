@@ -9,10 +9,25 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    description: String,
+    description: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        default: ""
+    },
     stock: {
         type: Number,
         default: 0
+    },
+    isFeatured: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Important: This middleware must be before routes
-app.use(express.json())//allows you to parse the body of request
+app.use(express.json({limit: "10mb"}))//allows you to parse the body of request
 app.use(cookieParser()) //this will allow to referesh cokie in login
 
 app.use("/api/auth",authRoutes)
