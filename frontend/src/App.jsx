@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 import NavBar from "./components/NavBar";
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from "react-hot-toast";
@@ -10,14 +11,17 @@ import { Navigate } from "react-router-dom";
 import { Home } from "lucide-react";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+
 
 
 const App = () => {
-  const { user, checkAuth} = useUserStore();
+  const { user, checkAuth, checkingAuth} = useUserStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
   // console.log(user);
+  if (checkingAuth) return <LoadingSpinner />
   return (
     <div className='min-h-screen bg-gray-900 text-black relative overflow-hidden '>
       {/* Background gradient */}
@@ -35,6 +39,8 @@ const App = () => {
           {/* <Route path="/signup" element={<SignupPage />} /> */}
           <Route path="/signup" element={!user ? <SignupPage /> : <Navigate to='/' />} />
           <Route path="/login" element={!user ? <LoginPage /> : <Navigate to='/' />} />
+          <Route path="/secret-dashboard"  
+          element={user?.role==="admin"? <AdminPage />:<Navigate to='/login' />} />
         </Routes>
       </div>
       <Toaster />
