@@ -5,7 +5,7 @@ import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
-
+import CartPage from "./pages/CartPage.jsx";
 import NavBar from "./components/NavBar";
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from "react-hot-toast";
@@ -14,14 +14,19 @@ import { Home } from "lucide-react";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
-
+import { useCartStore } from "./stores/useCartStores";
 
 
 const App = () => {
   const { user, checkAuth, checkingAuth} = useUserStore();
+  const { getCartItems } = useCartStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    getCartItems()
+  }, [getCartItems]);
   // console.log(user);
   if (checkingAuth) return <LoadingSpinner />
   return (
@@ -45,7 +50,9 @@ const App = () => {
           element={user?.role==="admin"? <AdminPage />:<Navigate to='/login' />} />
           <Route path="/category/:category"  
           element={<CategoryPage/>} />
-        </Routes>
+          <Route path="/cart" element={user? <CartPage />: <Navigate to='/login' /> }/>
+          </Routes>
+        
       </div>
       <Toaster />
     </div>
