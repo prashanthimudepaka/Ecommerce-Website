@@ -5,19 +5,16 @@ import { ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CartItem from '../components/CartItem';
 import PeopleAlsoBought from '../components/PeopleAlsoBought';
+import OrderSummary from '../components/OrderSummary';
+import GiftCouponCard from '../components/GiftCouponCard';
 /*************  ✨ Windsurf Command ⭐  *************/
 /**
- * CartPage component renders the shopping cart page.
- * 
- * This component displays a list of items in the user's cart. If the cart is empty,
- * it shows a message with a link to start shopping. If there are items in the cart,
- * it lists each item using the CartItem component and suggests products that people
- * also bought via the PeopleAlsoBought component.
- * 
- * The layout is responsive, utilizing motion animations for transitions.
- */
+ * CartPage component renders the user's shopping cart page. It displays the list of items that 
+ * the user has added to their cart. If the cart is empty, it shows an empty cart message with 
+ * a prompt to start shopping. When items are present, it displays a list of CartItem components 
+ * and includes a PeopleAlsoBought section for product recommendations. Additionally, it shows 
 
-/*******  21f2ac0e-cd5c-479c-b2d9-225ed391a121  *******/
+/*******  389159f0-cda4-41cb-9287-eadb50459589  *******/
 const CartPage = () => {
 	const { cart } = useCartStore();
 
@@ -42,6 +39,17 @@ const CartPage = () => {
 						)}
 						{cart.length > 0 && <PeopleAlsoBought />}
 					</motion.div>
+          {cart.length > 0 && (
+						<motion.div
+							className='mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full'
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.5, delay: 0.4 }}
+						>
+							<OrderSummary />
+							<GiftCouponCard />
+            </motion.div>
+          )}
             </div>
         </div>
     </div>

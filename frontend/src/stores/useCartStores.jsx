@@ -1,13 +1,14 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import toast from "react-hot-toast";
-import { sub } from "framer-motion/client";
 
 export const useCartStore = create((set, get) => ({
   cart: [],
   coupon: null,
   total: 0,
+  subtotal: 0,
   loading: false,
+  isCouponApplied: false,
 
   getCartItems: async () => {
     try {
@@ -26,40 +27,63 @@ export const useCartStore = create((set, get) => ({
 
       set((prevState) => {
         const existingItem = prevState.cart.find((item) => item._id === product._id);
-        
-        const newCart=existingItem ? prevState.cart.map((item) =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        ):[...prevState.cart,{...product,quantity:1}];
-        
+
+        const newCart = existingItem
+          ? prevState.cart.map((item) =>
+              item._id === product._id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            )
+          : [...prevState.cart, { ...product, quantity: 1 }];
 
         return { cart: newCart };
       });
+
       get().calculateTotals();
       toast.success("Product added to cart successfully!");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add product to cart");
     }
   },
+
   removeFromCart: async (productId) => {
-    await axios.delete(`/carts`,{data:{productId}});
-    toast.success("Product removed from cart successfully!");
+    await axios.delete(`/carts`, { data: { productId } });
     set((prevProducts) => ({
       cart: prevProducts.cart.filter((product) => product._id !== productId),
     }));
     get().calculateTotals();
     toast.success("Product removed from cart successfully!");
   },
+
   calculateTotals: () => {
-    const { cart,coupon }= get();
-    const subTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    let total=subTotal;
-    if(coupon){
-      const discount=subTotal*(coupon.discountPercentage/100);
-      total=subTotal-discount;
+    const { cart, coupon } = get();
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let total = subtotal;
+
+    if (coupon) {
+      const discount = subtotal * (coupon.discountPercentage / 100);
+      total = subtotal - discount;
     }
-    set({ subTotal,total });
+
+    set({ subtotal, total });
+  },
+
+  updateQuantity: async (productId, quantity) => {
+    if (quantity == 0) {
+      get().removeFromCart(productId);
+      return;
+    }
+
+    await axios.put(`/carts/${productId}`, { quantity });
+
+    set((prevState) => ({
+      cart: prevState.cart.map((item) =>
+        item._id === productId ? { ...item, quantity } : item
+      ),
+    }));
+
+    get().calculateTotals();
   },
 }));
+
 export default useCartStore;
