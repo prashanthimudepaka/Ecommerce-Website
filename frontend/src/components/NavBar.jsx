@@ -12,14 +12,14 @@ const NavBar = () => {
     return (
         <header
             className="fixed top-0 left-0 w-full  bg-opacity-90 backdrop-blur-md shadow-lg z-40
-         transition-all duration-300 border-b border-green- 600 bg-gradient-to-r from-blue-500 to-emerald-500"
+         transition-all duration-300 border-b border-green-600 bg-gray-800"
         >
-            <div className="container mx-auto px-4 py-3">
+            <div className="container mx-auto px-6 py-2">
                 <div className="flex justify-between items-center">
 
-            <div className='flex flex-wrap justify-between items-center'>
-					<Link to='/' className='text-2xl font-bold text-green-800 items-center space-x-2 flex'>
-						E-Commerce
+            <div className='flex flex-wrap justify-between items-center gap-1' >
+					<Link to='/' className='text-3xl font-bold text-gray-50 border-2 rounded-full px-4 py-4 bg-blue-600 shadow-[0_10px_30px_rgba(128,0,128,0.3)] font-elegance italic  items-center space-x-2 flex '>
+						Trendora
 					</Link>
                 </div>
 
@@ -41,15 +41,15 @@ const NavBar = () => {
                      {user && (
 							<Link
 								to={"/cart"}
-								className='relative group text-amber-950 hover:text-emerald-400 transition duration-300 
+								className='relative group text-emerald-100 text-2xl hover:text-emerald-400 transition duration-300 
 							ease-in-out'
 							>
-								<ShoppingCart className='inline-block mr-1 group-hover:text-emerald-400' size={20} />
+								<ShoppingCart className='inline-block mr-1 group-hover:text-emerald-400' size={40} />
 								<span className='hidden sm:inline'>Cart</span>
 							
 									<span
 										className='absolute -top-2 -left-2 bg-emerald-500 text-black rounded-full px-2 py-0.5 
-									text-xs group-hover:bg-emerald-400 transition duration-300 ease-in-out'
+									text-xl group-hover:bg-emerald-400 transition duration-300 ease-in-out'
 									>
 										{cart.length}
 									</span>

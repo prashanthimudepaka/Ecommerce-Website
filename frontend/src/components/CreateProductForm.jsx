@@ -2,8 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
+import { div } from "framer-motion/client";
 
-const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags","jwellery"];
+const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags","jwellery","vehicles"];
 
 const CreateProductForm = () => {
 	const [newProduct, setNewProduct] = useState({
@@ -40,14 +41,19 @@ const CreateProductForm = () => {
 	};
 
 	return (
+		
+
 		<motion.div
 			className='bg-gray-800 shadow-lg rounded-lg p-8 mb-8 max-w-xl mx-auto'
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8 }}
 		>
-			<h2 className='text-2xl font-semibold mb-6 text-emerald-300'>Create New Product</h2>
 
+			<h2 className='text-2xl font-semibold mb-6 text-emerald-300'>Create New Product</h2>
+			<div>
+			
+			</div>
 			<form onSubmit={handleSubmit} className='space-y-4'>
 				<div>
 					<label htmlFor='name' className='block text-sm font-medium text-gray-300'>
